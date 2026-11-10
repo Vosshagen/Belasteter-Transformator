@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hilfekarten · Belasteter Transformator</title><style>
+    :root {
+      color-scheme: light;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f6f8;
+      color: #17212b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: clamp(1rem, 4vw, 3rem);
+    }
+
+    main {
+      width: min(100%, 980px);
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 .4rem;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+    }
+
+    .intro {
+      margin: 0 0 1.6rem;
+      color: #506070;
+      font-size: clamp(1rem, 2.3vw, 1.2rem);
+    }
+
+    .karten {
+      display: grid;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    details {
+      overflow: hidden;
+      border: 2px solid var(--farbe);
+      border-radius: 1rem;
+      background: #fff;
+      box-shadow: 0 5px 18px rgb(20 30 40 / 8%);
+    }
+
+    .karten > details:nth-child(1) { --farbe: #2878b5; --hell: #e9f3fb; }
+    .karten > details:nth-child(2) { --farbe: #238b72; --hell: #e7f5f1; }
+    .karten > details:nth-child(3) { --farbe: #7652a3; --hell: #f1ebf8; }
+    .karten > details:nth-child(4) { --farbe: #d57922; --hell: #fff1e4; }
+    .karten > details:nth-child(5) { --farbe: #bd4654; --hell: #fbeaec; }
+
+    summary {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      min-height: 5.5rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      list-style: none;
+      background: var(--hell);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    summary::-webkit-details-marker { display: none; }
+
+    .nummer {
+      display: grid;
+      flex: 0 0 2.8rem;
+      width: 2.8rem;
+      height: 2.8rem;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--farbe);
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 750;
+    }
+
+    .kartentitel {
+      display: grid;
+      gap: .18rem;
+      font-size: clamp(1.08rem, 2.7vw, 1.38rem);
+      font-weight: 750;
+    }
+
+    .kartentitel small {
+      color: #536170;
+      font-size: .68em;
+      font-weight: 650;
+    }
+
+    .pfeil {
+      margin-left: auto;
+      font-size: 1.5rem;
+      transition: transform .2s ease;
+    }
+
+    .karten > details[open] > summary .pfeil { transform: rotate(180deg); }
+
+    .inhalt {
+      padding: 1.25rem 1.5rem 1.5rem;
+      border-top: 2px solid var(--farbe);
+      font-size: clamp(1.03rem, 2.25vw, 1.23rem);
+      line-height: 1.55;
+    }
+
+    .inhalt p { margin: 0; }
+    .inhalt p + p { margin-top: 1rem; }
+    .inhalt ul, .inhalt ol {
+      margin: .8rem 0 0;
+      padding-left: 1.45rem;
+    }
+    .inhalt li + li { margin-top: .8rem; }
+    .inhalt li p { margin-top: .55rem; }
+
+    .formel {
+      overflow-x: auto;
+      padding: .8rem 1rem;
+      border-radius: .65rem;
+      background: #f5f7f8;
+      text-align: center;
+      font-family: "Cambria Math", "Times New Roman", serif;
+      font-size: clamp(1.25rem, 3vw, 1.58rem);
+      white-space: nowrap;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: stretch;
+      vertical-align: middle;
+      margin: 0 .12em;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .frac > span:first-child {
+      padding: 0 .18em .08em;
+      border-bottom: .07em solid currentColor;
+    }
+
+    .frac > span:last-child { padding: .08em .18em 0; }
+
+    summary:focus-visible {
+      outline: 4px solid #1d70b8;
+      outline-offset: -4px;
+    }
+
+    @media (min-width: 760px) {
+      .karten { grid-template-columns: repeat(2, 1fr); }
+      
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .pfeil { transition: none; }
+    }
+  
+    .legende { margin: -.4rem 0 1.6rem; color: #506070; line-height: 1.6; }
+    .hilfe { margin-top: 1rem; border: 1px solid #c8d2db; border-radius: .65rem; box-shadow: none; }
+    .hilfe > summary { display: block; min-height: 0; padding: .8rem 1rem; background: #f5f7f8; font-size: 1rem; font-weight: 650; }
+    .hilfe > summary::before { content: '+ '; color: #245b79; }
+    .hilfe[open] > summary::before { content: '− '; }
+    .hilfe > div { padding: 1rem; font-size: 1rem; line-height: 1.6; }
+    .hinweis { font-size: .95rem; color: #506070; }
+    footer { margin: 1.5rem 0 0; color: #506070; font-size: .9rem; }
+    sub { font-size: .72em; }
+    .formel { margin-top: .8rem !important; }
+    @media (max-width: 430px) {
+      body { padding: .8rem; }
+      summary { gap: .6rem; padding: .9rem; }
+      .inhalt { padding: 1rem; }
+      .nummer { flex-basis: 2.3rem; width: 2.3rem; height: 2.3rem; }
+    }
+</style></head><body><main>
+<h1>Hilfekarten zum belasteten Transformator</h1>
+<p class="intro">Wählt eure Aufgabe. Öffnet zunächst nur die erste Hilfe und versucht dann selbst weiterzuarbeiten.</p>
+<p class="legende">Indizes: <strong>P = Primärseite</strong>, <strong>S = Sekundärseite</strong>.<br>Das Formelzeichen <em>P</em> steht für die elektrische Leistung.</p>
+<section class="karten" aria-label="Hilfen zu den Aufgaben 1 und 2 und zur Hausaufgabe"><details>
+<summary><span class="nummer" aria-hidden="true">1</span><span class="kartentitel"><small>Aufgabe 1 · Tabelle</small>Leistungen berechnen</span><span class="pfeil" aria-hidden="true">⌄</span></summary>
+<div class="inhalt"><p>Wählt die Spannung und die Stromstärke <strong>derselben Seite und derselben Tabellenzeile</strong>.</p><details class="hilfe"><summary>Hilfe 1 · Welche Werte gehören zusammen?</summary><div><p>Primärseite: U<sub>P</sub> und I<sub>P</sub>.<br>Sekundärseite: U<sub>S</sub> und I<sub>S</sub>.</p><p>U<sub>P</sub> ist vorgegeben. U<sub>S</sub> und I<sub>P</sub> lest ihr in der Simulation ab. I<sub>S</sub> stellt ihr gemäß Tabelle ein.</p></div></details><details class="hilfe"><summary>Hilfe 2 · Wie rechnen wir?</summary><div><p>Elektrische Leistung ist Spannung mal Stromstärke:</p><p class="formel">P = U · I</p><p class="formel">P<sub>P</sub> = U<sub>P</sub> · I<sub>P</sub></p><p class="formel">P<sub>S</sub> = U<sub>S</sub> · I<sub>S</sub></p><p>Volt mal Ampere ergibt Watt. Tragt beide Leistungen in die gelben Felder ein.</p></div></details></div></details><details>
+<summary><span class="nummer" aria-hidden="true">2</span><span class="kartentitel"><small>Aufgabe 1 · Auswertung</small>Ergebnisse vergleichen</span><span class="pfeil" aria-hidden="true">⌄</span></summary>
+<div class="inhalt"><p>Unterscheidet zwei Vergleiche: <strong>innerhalb einer Zeile</strong> und <strong>zwischen den Zeilen</strong>.</p><details class="hilfe"><summary>Hilfe 1 · Innerhalb einer Zeile</summary><div><p>Vergleicht P<sub>P</sub> und P<sub>S</sub> in der ersten Zeile. Prüft, ob ihr in der zweiten Zeile dieselbe Beziehung findet.</p><p>Denkt an die Energieerhaltung: Kann ein idealer Transformator zusätzliche Energie erzeugen? Im idealen Modell wird auch keine Energie im Trafo in Wärme umgesetzt.</p></div></details><details class="hilfe"><summary>Hilfe 2 · Zwischen den Zeilen</summary><div><p>Vergleicht nun P<sub>P</sub> aus Zeile 1 mit P<sub>P</sub> aus Zeile 2. Vergleicht genauso die beiden Werte von P<sub>S</sub>.</p><p>Welche Leistung muss die Quelle liefern, wenn der Verbraucher mehr Leistung aufnimmt?</p></div></details><details class="hilfe"><summary>Hilfe 3 · Eure Aussage genau formulieren</summary><div><p>Vervollständigt mit euren Ergebnissen:</p><p>„Innerhalb jeder Zeile sind die Leistungen auf beiden Seiten … . Wenn die Sekundärstromstärke bei gleicher Sekundärspannung steigt, … .“</p></div></details></div></details><details>
+<summary><span class="nummer" aria-hidden="true">3</span><span class="kartentitel"><small>Aufgabe 2 · Vorhersage</small>Sekundärspannung und Primärstromstärke</span><span class="pfeil" aria-hidden="true">⌄</span></summary>
+<div class="inhalt"><p>Rechnet zuerst. Stellt die vorgegebenen Werte erst danach in der Simulation ein.</p><details class="hilfe"><summary>Hilfe 1 · Sekundärspannung bestimmen</summary><div><p>Vergleicht N<sub>S</sub> mit N<sub>P</sub>. Nutzt das Spannungsgesetz:</p><p class="formel">U<sub>S</sub> = U<sub>P</sub> · <span class="frac"><span>N<sub>S</sub></span><span>N<sub>P</sub></span></span></p><p>Setzt U<sub>P</sub> = 6 V, N<sub>P</sub> = 100 und N<sub>S</sub> = 50 ein.</p></div></details><details class="hilfe"><summary>Hilfe 2 · Über die Leistung weiterrechnen</summary><div><p>Nutzt eure berechnete Sekundärspannung und die vorgegebene Sekundärstromstärke I<sub>S</sub> = 0,5 A:</p><p class="formel">P<sub>S</sub> = U<sub>S</sub> · I<sub>S</sub></p><p>Beim idealen Transformator gilt P<sub>P</sub> = P<sub>S</sub>. Damit kennt ihr jetzt auch die aufgenommene Leistung.</p></div></details><details class="hilfe"><summary>Hilfe 3 · Nach der Stromstärke umstellen</summary><div><p>Aus P<sub>P</sub> = U<sub>P</sub> · I<sub>P</sub> folgt durch Teilen beider Seiten durch U<sub>P</sub>:</p><p class="formel">I<sub>P</sub> = <span class="frac"><span>P<sub>P</sub></span><span>U<sub>P</sub></span></span></p><p>Teilt die Leistung durch die <strong>Primärspannung von 6 V</strong>. Watt geteilt durch Volt ergibt Ampere.</p></div></details></div></details><details>
+<summary><span class="nummer" aria-hidden="true">4</span><span class="kartentitel"><small>Hausaufgabe · Seite 3</small>Ein Trafo für eine Beleuchtung</span><span class="pfeil" aria-hidden="true">⌄</span></summary>
+<div class="inhalt"><p>Öffne nur die Hilfe zu der Teilaufgabe, bei der du nicht weiterkommst.</p><details class="hilfe"><summary>a) · Sekundärwindungszahl</summary><div><p>Die Sekundärspannung soll ein Viertel der Primärspannung betragen. Was bedeutet das für die Windungszahlen?</p><details class="hilfe"><summary>Weiterer Hinweis · Nach Nₛ umstellen</summary><div><p class="formel"><span class="frac"><span>U<sub>S</sub></span><span>U<sub>P</sub></span></span> = <span class="frac"><span>N<sub>S</sub></span><span>N<sub>P</sub></span></span></p><p>Multipliziere beide Seiten mit N<sub>P</sub>:</p><p class="formel">N<sub>S</sub> = N<sub>P</sub> · <span class="frac"><span>U<sub>S</sub></span><span>U<sub>P</sub></span></span></p></div></details></div></details><details class="hilfe"><summary>b) · Leistung und Primärstromstärke</summary><div><p>Berechne zuerst die abgegebene Leistung aus U<sub>S</sub> = 6 V und I<sub>S</sub> = 0,60 A. Nutze dann die Leistungsgleichheit.</p><p class="formel">P<sub>S</sub> = U<sub>S</sub> · I<sub>S</sub></p><p class="formel">P<sub>P</sub> = P<sub>S</sub></p><p class="formel">I<sub>P</sub> = <span class="frac"><span>P<sub>P</sub></span><span>U<sub>P</sub></span></span></p><p>Die Primärspannung beträgt weiterhin 24 V.</p></div></details><details class="hilfe"><summary>c) · Veränderte Belastung</summary><div><p>Gehe genauso vor wie bei b). Nutze jetzt I<sub>S</sub> = 1,20 A. Beide Spannungen bleiben unverändert.</p><p>Prüfe: Wenn sich I<sub>S</sub> bei gleicher Spannung verdoppelt, was geschieht mit der abgegebenen Leistung?</p></div></details><details class="hilfe"><summary>d) · Die Aussage beurteilen</summary><div><p>Vergleiche zuerst Primär- und Sekundärleistung <strong>im selben Betriebszustand</strong>. Vergleiche anschließend die Leistungen aus b) und c).</p><p>Was geschieht mit der Primärstromstärke? Was bedeutet das bei gleicher Primärspannung für die Energie, die die Quelle pro Sekunde liefert?</p></div></details></div></details></section>
+<footer>Zum gekürzten Arbeitsblatt · Idealer Transformator mit ohmschem Verbraucher</footer>
+</main></body></html>
